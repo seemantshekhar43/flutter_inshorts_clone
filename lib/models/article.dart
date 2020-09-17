@@ -2,6 +2,7 @@ class Article {
   String title;
   String author;
   String content;
+  String description;
   String source;
   String sourceURL;
   String imageURL;
@@ -12,6 +13,7 @@ class Article {
       this.author,
       this.content,
       this.source,
+      this.description,
       this.sourceURL,
       this.imageURL,
       this.publishedAt});

@@ -3,15 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inshorts_clone/screens/home_screen.dart';
 
 void main(){
-  SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.black,
-        statusBarColor: Colors.black,
-        statusBarBrightness: Brightness.light,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
-  );
+
+
   runApp(MyApp());
+  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+
 }
 
 class MyApp extends StatelessWidget {

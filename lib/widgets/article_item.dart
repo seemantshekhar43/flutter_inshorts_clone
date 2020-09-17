@@ -2,28 +2,26 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inshorts_clone/models/article.dart';
+import 'package:flutter_inshorts_clone/screens/web_screen.dart';
 import 'package:intl/intl.dart';
 
 class ArticleItem extends StatelessWidget {
-
   final Article article;
-
 
   ArticleItem({this.article});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top:true,
+      // top:false,
       bottom: false,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Container(
 
           constraints: BoxConstraints(
-            minHeight:MediaQuery.of(context).size.height,
-            minWidth: double.maxFinite
-          ),
+              minHeight: MediaQuery.of(context).size.height,
+              minWidth: double.maxFinite),
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(12),
@@ -33,24 +31,24 @@ class ArticleItem extends StatelessWidget {
             children: [
               article.imageURL != null
                   ? Container(
-                height: MediaQuery.of(context).size.height *0.4,
-                decoration: BoxDecoration(
-                  color: Color(0xffF0f0f0),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      article.imageURL,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              )
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      decoration: BoxDecoration(
+                        color: Color(0xffF0f0f0),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            article.imageURL,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
                   : Container(
-                height: MediaQuery.of(context).size.height *0.4,
-                color: Color(0xffF0f0f0),
-              ),
-              Padding(
-                padding: EdgeInsets.all(15),
-                child: Expanded(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      color: Color(0xffF0f0f0),
+                    ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -68,7 +66,7 @@ class ArticleItem extends StatelessWidget {
                         height: 8,
                       ),
                       Text(
-                        article.content,
+                        article.description,
                         style: TextStyle(
                           // color: AppColor.onBackground,
                           fontSize: 15,
@@ -81,16 +79,93 @@ class ArticleItem extends StatelessWidget {
                       SizedBox(
                         height: 16,
                       ),
-                      // Text(
-                      //   "${AppLocalizations.of(context).translate("swipe_message")} ${article.source} / ${DateFormat("MMMM d").format(
-                      //     DateTime(article.publishedAt),
-                      //   )}",
+                      Text(
+                        "Swipe left for more ${article.source} / ${DateFormat("MMMM d").format(article.publishedAt)}",
                         style: TextStyle(
                           color: Color(0xffcccccc),
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                         ),
                       )
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => WebScreen(
+                  url: article.sourceURL,
+                  )));
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  child: Stack(
+                    children: <Widget>[
+                      article.imageURL != null
+                          ? Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              decoration: BoxDecoration(
+                                color: Color(0xffF0f0f0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    article.imageURL,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              color: Color(0xffF0f0f0),
+                            ),
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        height: double.maxFinite,
+                        width: double.maxFinite,
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Container(
+                            color: Colors.black.withOpacity(0.2),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: double.maxFinite,
+                        color: Color(0xff000000).withOpacity(0.6),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              article.content != null
+                                  ? article.content
+                                      .split(",")[0]
+                                      .replaceAll("\n", "")
+                                  : "",
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              'Tap to read more',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                              ),
+                              overflow: TextOverflow.fade,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
