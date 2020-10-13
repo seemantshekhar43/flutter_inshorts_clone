@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inshorts_clone/screens/home_screen.dart';
 
 void main(){
-
-
   runApp(MyApp());
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
 

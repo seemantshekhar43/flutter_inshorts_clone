@@ -54,20 +54,22 @@ class FeedRepositoryImpl implements FeedRepository{
       final response = await http.get(url, headers: {"X-Api-Key": Global.apiKey});
       if(response.statusCode ==  200){
         final responseBody = jsonDecode(response.body);
+        print(responseBody);
         final List data = responseBody['articles'].toList();
         data.forEach((article) {
           final Article a = Article(
-            title: article['title'],
-            content: article['description'],
-            author: article['author'],
+            title: article['title'] ?? '',
+            description: article['description'] ?? '',
+            content: article['content'] ?? '',
+            author: article['author'] ?? '',
             publishedAt:DateTime.parse(article['publishedAt']),
-            imageURL: article['urlToImage'],
-            sourceURL: article['url'],
+            imageURL: article['urlToImage'] ?? ' ',
+            sourceURL: article['url'] ?? 'https://www.google.com',
             source: article['source'] != null
                 ? article['source']['name']
                 : null,
           );
-          list.add(article);
+          list.add(a);
         });
 
       }

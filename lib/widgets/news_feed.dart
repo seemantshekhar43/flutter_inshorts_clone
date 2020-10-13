@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inshorts_clone/models/article.dart';
 import 'package:flutter_inshorts_clone/models/feed.dart';
 import 'package:flutter_inshorts_clone/screens/loading_screen.dart';
 
@@ -34,12 +33,15 @@ class _NewsFeedState extends State<NewsFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return (_isLoading)? LoadingScreen():PageView.builder(
-      scrollDirection: Axis.vertical,
-        itemCount: articlesList.articles.length,
-        itemBuilder: (context, index){
-        return  ArticleItem(article: articlesList.articles[index],);
-        }
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body:  (_isLoading)? LoadingScreen():PageView.builder(
+        scrollDirection: Axis.vertical,
+          itemCount: articlesList.articles.length,
+          itemBuilder: (context, index){
+          return  ArticleItem(article: articlesList.articles[index],);
+          }
+      ),
     );
   }
 }

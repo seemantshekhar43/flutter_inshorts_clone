@@ -66,7 +66,7 @@ class ArticleItem extends StatelessWidget {
                         height: 8,
                       ),
                       Text(
-                        article.description,
+                        article.description??'',
                         style: TextStyle(
                           // color: AppColor.onBackground,
                           fontSize: 15,

@@ -16,6 +16,15 @@ class Feed {
       // notifyListeners();
     }
   }
+  Future<void> fetchArticlesByTopic(String topic) async{
+    List<Article> list = await feedRepository.getNewsByTopic(topic);
+    if(list.isNotEmpty){
+      _list.clear();
+      _list.addAll(list);
+      print(_list.length);
+      // notifyListeners();
+    }
+  }
   
   
   // void fetchArticles(){
